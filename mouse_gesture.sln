@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mouse_gesture", "mouse_gesture\mouse_gesture.vcxproj", "{DCA35B31-D4EC-4387-A314-5C0818B27128}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EAD38B07-E470-4F99-9660-B8235C992F38} = {EAD38B07-E470-4F99-9660-B8235C992F38}
+		{A0E31B24-030D-43F9-8A38-1A688BD6E5AA} = {A0E31B24-030D-43F9-8A38-1A688BD6E5AA}
+		{DC66DB49-C935-4DB0-9CFE-B5AEBF688DC8} = {DC66DB49-C935-4DB0-9CFE-B5AEBF688DC8}
+		{DE9787C7-AE05-4C6F-98B5-0FC238EE189D} = {DE9787C7-AE05-4C6F-98B5-0FC238EE189D}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mouse_gesture_command_executor", "mouse_gesture_command_executor\mouse_gesture_command_executor.vcxproj", "{A0E31B24-030D-43F9-8A38-1A688BD6E5AA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EAD38B07-E470-4F99-9660-B8235C992F38} = {EAD38B07-E470-4F99-9660-B8235C992F38}
+		{DC66DB49-C935-4DB0-9CFE-B5AEBF688DC8} = {DC66DB49-C935-4DB0-9CFE-B5AEBF688DC8}
+		{DE9787C7-AE05-4C6F-98B5-0FC238EE189D} = {DE9787C7-AE05-4C6F-98B5-0FC238EE189D}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mouse_gesture_data", "mouse_gesture_data\mouse_gesture_data.vcxproj", "{DE9787C7-AE05-4C6F-98B5-0FC238EE189D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "base", "base\base.vcxproj", "{EAD38B07-E470-4F99-9660-B8235C992F38}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mouse_event_hooker", "mouse_event_hooker\mouse_event_hooker.vcxproj", "{DC66DB49-C935-4DB0-9CFE-B5AEBF688DC8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DCA35B31-D4EC-4387-A314-5C0818B27128}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DCA35B31-D4EC-4387-A314-5C0818B27128}.Debug|Win32.Build.0 = Debug|Win32
+		{DCA35B31-D4EC-4387-A314-5C0818B27128}.Release|Win32.ActiveCfg = Release|Win32
+		{DCA35B31-D4EC-4387-A314-5C0818B27128}.Release|Win32.Build.0 = Release|Win32
+		{A0E31B24-030D-43F9-8A38-1A688BD6E5AA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A0E31B24-030D-43F9-8A38-1A688BD6E5AA}.Debug|Win32.Build.0 = Debug|Win32
+		{A0E31B24-030D-43F9-8A38-1A688BD6E5AA}.Release|Win32.ActiveCfg = Release|Win32
+		{A0E31B24-030D-43F9-8A38-1A688BD6E5AA}.Release|Win32.Build.0 = Release|Win32
+		{DE9787C7-AE05-4C6F-98B5-0FC238EE189D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DE9787C7-AE05-4C6F-98B5-0FC238EE189D}.Debug|Win32.Build.0 = Debug|Win32
+		{DE9787C7-AE05-4C6F-98B5-0FC238EE189D}.Release|Win32.ActiveCfg = Release|Win32
+		{DE9787C7-AE05-4C6F-98B5-0FC238EE189D}.Release|Win32.Build.0 = Release|Win32
+		{EAD38B07-E470-4F99-9660-B8235C992F38}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EAD38B07-E470-4F99-9660-B8235C992F38}.Debug|Win32.Build.0 = Debug|Win32
+		{EAD38B07-E470-4F99-9660-B8235C992F38}.Release|Win32.ActiveCfg = Release|Win32
+		{EAD38B07-E470-4F99-9660-B8235C992F38}.Release|Win32.Build.0 = Release|Win32
+		{DC66DB49-C935-4DB0-9CFE-B5AEBF688DC8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DC66DB49-C935-4DB0-9CFE-B5AEBF688DC8}.Debug|Win32.Build.0 = Debug|Win32
+		{DC66DB49-C935-4DB0-9CFE-B5AEBF688DC8}.Release|Win32.ActiveCfg = Release|Win32
+		{DC66DB49-C935-4DB0-9CFE-B5AEBF688DC8}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
