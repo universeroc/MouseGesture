@@ -22,6 +22,9 @@ void DestoryStatusIcon();
 wchar_t MouseGestureView::title_[kMaxLoadString];
 wchar_t MouseGestureView::class_name_[kMaxLoadString];
 
+// if we use a local varible we could not remove the icon when app quit.
+static NOTIFYICONDATA data = {};
+
 MouseGestureView::MouseGestureView(HINSTANCE instance,
     MouseGestureHandler* handler)
     : instance_(instance), handler_(handler) {
@@ -43,16 +46,6 @@ void MouseGestureView::LoadResource() {
   // without this line below, you will not get a correct menu.
   // just a vertical line with blank content
   status_menu_ = GetSubMenu(status_menu_, 0);
-
-  if (!status_menu_) {
-    DWORD error = GetLastError();
-    wchar_t txt[20] = {0};
-    wprintf(txt, L"%d\n", error);
-    OutputDebugString(txt);
-  } else {
-    //status_menu_ = CreatePopupMenu();
-    //InsertMenu(status_menu_, 0, 0, 0, L"ddddd");
-  }
 }
 
 ATOM MouseGestureView::RegisterWindowClass() {
@@ -105,7 +98,6 @@ bool MouseGestureView::Init() {
 
   SetWindowLong(hwnd, GWL_USERDATA, (long)(this));
 
-  //status_menu_ = GetMenu(hwnd_);
   CreateStatusIcon(hwnd);
 
   return true;
@@ -162,7 +154,7 @@ LRESULT CALLBACK MouseGestureView::WndProc(
 		{
     case IDM_SETTINGS: {
       MouseGestureView* view =
-        (MouseGestureView*)GetWindowLong(hWnd, GWL_USERDATA);
+          (MouseGestureView*)GetWindowLong(hWnd, GWL_USERDATA);
       DialogBox(view->instance(), MAKEINTRESOURCE(IDD_DIALOG_SETTINGS), hWnd, About);
       break;
       }
@@ -172,7 +164,7 @@ LRESULT CALLBACK MouseGestureView::WndProc(
 			DialogBox(view->instance(), MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
 			break;
       }
-		case IDM_EXIT:
+    case IDM_EXIT:
 			DestroyWindow(hWnd);
 			break;
 		default:
@@ -186,8 +178,12 @@ LRESULT CALLBACK MouseGestureView::WndProc(
 		break;
 	case WM_DESTROY:
     DestoryStatusIcon();
-		PostQuitMessage(0);
+    PostQuitMessage(0);
 		break;
+  case WM_QUIT:
+    break;
+  case WM_CLOSE:
+    break;
   case WM_STATUS_TRAY_MSG:
     if(wParam == IDI_TRAY){
       if(lParam == WM_LBUTTONDOWN || lParam == WM_RBUTTONDOWN){
@@ -230,7 +226,6 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 }
 
 void CreateStatusIcon(HWND hwnd) {
-  NOTIFYICONDATA data = {};
   data.cbSize = sizeof(NOTIFYICONDATA);
   data.hWnd = hwnd;
   data.uID = IDI_TRAY;
@@ -246,7 +241,6 @@ void CreateStatusIcon(HWND hwnd) {
 }
 
 void DestoryStatusIcon() {
-  NOTIFYICONDATA data;
   Shell_NotifyIcon(NIM_DELETE, &data);
 }
 
