@@ -75,7 +75,6 @@ enum Direction {
   // l             = MAKEDIRECTION(DOWN, RIGHT, 4), same as DOWN_RIGHT
   N             = MAKEDIRECTION3(DOWN, UP, DOWN, UP, 4),
   q             = MAKEDIRECTION4(LEFT, DOWN, RIGHT, UP, DOWN, 4),
-  I
 };
 
 NS_MG_END

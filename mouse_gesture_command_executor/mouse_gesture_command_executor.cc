@@ -49,7 +49,6 @@ DirectionLog direction_log[] = {
   { h, L"h" },
   { N, L"N" },
   { q, L"q" },
-  { I, L"I" },
 };
 
 unsigned int direction_log_size = sizeof(direction_log) / sizeof(DirectionLog);
@@ -59,7 +58,7 @@ unsigned int direction_log_size = sizeof(direction_log) / sizeof(DirectionLog);
 NS_MG_START
 
 void MouseGestureCommandExecutor::DispatchDirectionToExecutor(Direction direction) {
-  for (int i = 0; i < direction_log_size; ++i) {
+  for (unsigned int i = 0; i < direction_log_size; ++i) {
     if (direction_log[i].dir == direction)
       LOG(direction_log[i].dir_str);
   }

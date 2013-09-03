@@ -37,7 +37,7 @@ NS_MG_START
 MouseGestureData::MouseGestureData() {
   // first version we just use default setting
   unsigned int len = sizeof (default_setting) / sizeof(Data);
-  for (int i = 0; i < len; ++i)
+  for (unsigned int i = 0; i < len; ++i)
     data_.push_back(default_setting[i]);
 
   /*std::wfstream fs; //(kMouseGestureDataFileName, std::fstream::in | std::fstream::out | std::fstream::binary);

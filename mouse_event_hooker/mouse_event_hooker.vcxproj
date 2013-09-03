@@ -40,8 +40,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IntDir>$(SolutionDir)$(Configuration).intermediate</IntDir>
-    <OutDir>$(SolutionDir)$(Configuration)</OutDir>
+    <IntDir>$(SolutionDir)$(Configuration).intermediate\</IntDir>
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
