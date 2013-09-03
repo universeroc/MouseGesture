@@ -24,6 +24,8 @@ public:
   int RunLoop();
   void Update();
 
+  HINSTANCE instance() const { return instance_; }
+
   static wchar_t* title() { return title_; }
   static wchar_t* class_name() { return class_name_; }
 
@@ -42,6 +44,8 @@ private:
 
   HWND hwnd_;
   HINSTANCE instance_;
+
+  HMENU status_menu_;
 
   MouseGestureHandler* handler_;
 };

@@ -90,6 +90,9 @@
   <ItemGroup>
     <ResourceCompile Include="mouse_gesture.rc" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="mouse.ico" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

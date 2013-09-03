@@ -38,6 +38,21 @@ void MouseGestureView::LoadResource() {
   // Initialize global strings
   LoadString(instance_, IDS_APP_TITLE, title_, kMaxLoadString);
   LoadString(instance_, IDC_MOUSE_GESTURE, class_name_, kMaxLoadString);
+  status_menu_ = LoadMenu(instance_, MAKEINTRESOURCE(MAKEWORD(IDC_MOUSE_GESTURE, 0)));
+
+  // without this line below, you will not get a correct menu.
+  // just a vertical line with blank content
+  status_menu_ = GetSubMenu(status_menu_, 0);
+
+  if (!status_menu_) {
+    DWORD error = GetLastError();
+    wchar_t txt[20] = {0};
+    wprintf(txt, L"%d\n", error);
+    OutputDebugString(txt);
+  } else {
+    //status_menu_ = CreatePopupMenu();
+    //InsertMenu(status_menu_, 0, 0, 0, L"ddddd");
+  }
 }
 
 ATOM MouseGestureView::RegisterWindowClass() {
@@ -50,12 +65,12 @@ ATOM MouseGestureView::RegisterWindowClass() {
   wcex.cbClsExtra		= 0;
   wcex.cbWndExtra		= 0;
   wcex.hInstance		= instance_;
-  wcex.hIcon			= LoadIcon(instance_, MAKEINTRESOURCE(IDI_MOUSE_GESTURE));
+  wcex.hIcon			= LoadIcon(instance_, MAKEINTRESOURCE(IDI_TRAY));
   wcex.hCursor		= LoadCursor(NULL, IDC_ARROW);
   wcex.hbrBackground	= (HBRUSH)(COLOR_WINDOW+1);
   wcex.lpszMenuName	= NULL;
   wcex.lpszClassName	= class_name_;
-  wcex.hIconSm		= LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+  wcex.hIconSm		= LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_TRAY));
 
   return RegisterClassEx(&wcex);
 }
@@ -88,8 +103,9 @@ bool MouseGestureView::Init() {
   
   hwnd_ = hwnd;
 
-  SetWindowLong(hwnd, GWL_USERDATA, (long)instance_);
+  SetWindowLong(hwnd, GWL_USERDATA, (long)(this));
 
+  //status_menu_ = GetMenu(hwnd_);
   CreateStatusIcon(hwnd);
 
   return true;
@@ -144,9 +160,16 @@ LRESULT CALLBACK MouseGestureView::WndProc(
 		// Parse the menu selections:
 		switch (wmId)
 		{
+    case IDM_SETTINGS: {
+      MouseGestureView* view =
+        (MouseGestureView*)GetWindowLong(hWnd, GWL_USERDATA);
+      DialogBox(view->instance(), MAKEINTRESOURCE(IDD_DIALOG_SETTINGS), hWnd, About);
+      break;
+      }
 		case IDM_ABOUT: {
-      long instance = GetWindowLong(hWnd, GWL_USERDATA);
-			DialogBox((HINSTANCE)instance, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+      MouseGestureView* view =
+          (MouseGestureView*)GetWindowLong(hWnd, GWL_USERDATA);
+			DialogBox(view->instance(), MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
 			break;
       }
 		case IDM_EXIT:
@@ -162,17 +185,22 @@ LRESULT CALLBACK MouseGestureView::WndProc(
 		EndPaint(hWnd, &ps);
 		break;
 	case WM_DESTROY:
-    // DestoryStatusIcon();
+    DestoryStatusIcon();
 		PostQuitMessage(0);
 		break;
   case WM_STATUS_TRAY_MSG:
     if(wParam == IDI_TRAY){
-      if(lParam == WM_LBUTTONDOWN){
-        OutputDebugString(L"status tray icon clicked!\n");
-        long instance = GetWindowLong(hWnd, GWL_USERDATA);
-        DialogBox((HINSTANCE)instance, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About, );
+      if(lParam == WM_LBUTTONDOWN || lParam == WM_RBUTTONDOWN){
+        MouseGestureView* view =
+            (MouseGestureView*)GetWindowLong(hWnd, GWL_USERDATA);
+        POINT pt;
+        GetCursorPos(&pt);
+        ::SetForegroundWindow(hWnd);  // for lost focus to dispop menu.
+        TrackPopupMenu(view->status_menu_,
+            TPM_LEFTALIGN | TPM_TOPALIGN/* | TPM_RETURNCMD*/,
+            pt.x, pt.y, 0, view->hwnd_, 0);
         return TRUE;
-      }	
+      }
     }
     break;
 	default:
@@ -210,8 +238,9 @@ void CreateStatusIcon(HWND hwnd) {
   data.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;  // never use dwInfoFlags!!!!
   wcscpy_s(data.szTip, MouseGestureView::class_name());
 
-  long instance = GetWindowLong(hwnd, GWL_USERDATA);
-  data.hIcon = LoadIcon((HINSTANCE)instance, MAKEINTRESOURCE(IDI_TRAY));
+  MouseGestureView* view =
+      (MouseGestureView*)GetWindowLong(hwnd, GWL_USERDATA);
+  data.hIcon = LoadIcon(view->instance(), MAKEINTRESOURCE(IDI_TRAY));
 
   Shell_NotifyIcon(NIM_ADD, &data);
 }
